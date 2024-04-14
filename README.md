@@ -6,7 +6,7 @@ Based on the intent of the programming we have following categories:
 # 1. Creational Patterns
 
 - [Factory Method ( Virtual Constructors )](./Creational/Factory_Method.cpp)
-- [Abstract Factory Method ( Virtual Constructors )](./Creational/Abstract_Factory.cpp)
+- [Abstract Factory Method ](./Creational/Abstract_Factory.cpp)
 
 # 2. Structural Patterns
 
