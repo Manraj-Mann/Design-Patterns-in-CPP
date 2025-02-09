@@ -65,5 +65,13 @@ int main() {
         s.draw(); // Type-erased call
     }
 
+    /*
+        => The ShapeWrapper class introduces type erasure to store heterogeneous objects.
+
+        => This adds significant complexity (e.g., Concept and Model classes) and runtime overhead (e.g., virtual function calls in ShapeWrapper).
+
+        => CRTP’s compile-time benefits are lost due to the runtime indirection introduced by type erasure.
+    */
+
     return 0;
 }
