@@ -2,122 +2,135 @@
 #include <memory>
 #include <vector>
 
-// shapes
+// Forward declarations for concrete shapes
 class Circle;
 class Square;
 
-// shape visitor
+// Visitor Interface
+// Defines the operations that can be performed on shapes.
 class ShapeVisitor
 {
-    public:
-    
+public:
     virtual ~ShapeVisitor() = default;
-    
-    virtual void visit( Circle const &) const = 0;
-    virtual void visit( Square const &) const = 0;
+
+    // Overloads for visiting each concrete shape type
+    virtual void visit(Circle const&) const = 0;
+    virtual void visit(Square const&) const = 0;
 };
 
-class Shape 
+// Base class for all shapes
+class Shape
 {
-    public:
-    
+public:
     Shape() = default;
     virtual ~Shape() = default;
-    
-    virtual void accept( ShapeVisitor const &) = 0;
+
+    // Accept a visitor (part of the Visitor Pattern)
+    // This method allows the visitor to "visit" the shape.
+    virtual void accept(ShapeVisitor const&) = 0;
 };
 
-
+// Concrete shape: Circle
 class Circle : public Shape
 {
-    public:
-    
-    explicit Circle( double rad) : _radius{rad} {}
-    
+public:
+    explicit Circle(double rad) : _radius{rad} {}
+
+    // Example of a method specific to Circle
     void exclusiveCircleWork()
     {
-        std::cout<<"Pure Circle work"<<std::endl;
+        std::cout << "Pure Circle work" << std::endl;
     }
-    
-    void accept( ShapeVisitor const & v) override
+
+    // Implementation of the accept method for Circle
+    // Calls the visitor's visit method with *this (a Circle).
+    void accept(ShapeVisitor const& v) override
     {
-        v.visit(*this);
+        v.visit(*this); // Double dispatch: Circle + Visitor
     }
-    
-    private:
-    
-    double _radius;
+
+private:
+    double _radius; // Radius of the circle
 };
 
+// Concrete shape: Square
 class Square : public Shape
 {
-    
-    public:
-    
-    explicit Square( double s) : _side{s} {}
-    
+public:
+    explicit Square(double s) : _side{s} {}
+
+    // Example of a method specific to Square
     void exclusiveSquareWork()
     {
-        std::cout<<"Pure Square work"<<std::endl;
+        std::cout << "Pure Square work" << std::endl;
     }
-    
-    void accept( ShapeVisitor const & v) override
+
+    // Implementation of the accept method for Square
+    // Calls the visitor's visit method with *this (a Square).
+    void accept(ShapeVisitor const& v) override
     {
-        v.visit(*this);
+        v.visit(*this); // Double dispatch: Square + Visitor
     }
-    
-    private:
-    
-    double _side;
+
+private:
+    double _side; // Side length of the square
 };
 
-
-
+// Concrete Visitor: Rotate
+// Implements the rotation operation for each shape type.
 class Rotate : public ShapeVisitor
 {
-    void visit( Circle const &) const override
+public:
+    void visit(Circle const&) const override
     {
-        std::cout<<"Do Some Rotation on Circle"<<std::endl;
+        std::cout << "Do Some Rotation on Circle" << std::endl;
     }
-    
-    void visit( Square const &) const override
+
+    void visit(Square const&) const override
     {
-        std::cout<<"Do Some Rotation on Square"<<std::endl;
+        std::cout << "Do Some Rotation on Square" << std::endl;
     }
 };
 
-
+// Concrete Visitor: Draw
+// Implements the drawing operation for each shape type.
 class Draw : public ShapeVisitor
 {
-    void visit( Circle const &) const override
+public:
+    void visit(Circle const&) const override
     {
-        std::cout<<"Drawing Circle"<<std::endl;
+        std::cout << "Drawing Circle" << std::endl;
     }
-    
-    void visit( Square const &) const override
+
+    void visit(Square const&) const override
     {
-        std::cout<<"Drawing Square"<<std::endl;
+        std::cout << "Drawing Square" << std::endl;
     }
 };
 
-void drawAllShapes( std::vector<std::unique_ptr<Shape>> const& shapes )
+// Function to draw all shapes in a collection
+// Uses the Visitor Pattern to perform the drawing operation.
+void drawAllShapes(std::vector<std::unique_ptr<Shape>> const& shapes)
 {
-     for( auto const& s : shapes )
-     {
-        s->accept( Draw{} );
-     }
+    for (auto const& s : shapes)
+    {
+        // Accept the Draw visitor to perform the drawing operation
+        s->accept(Draw{});
+    }
 }
 
 int main()
 {
-     using Shapes = std::vector<std::unique_ptr<Shape>>;
-     
-     // Creating some shapes
-     Shapes shapes;
-     shapes.emplace_back( std::make_unique<Circle>( 2.0 ) );
-     shapes.emplace_back( std::make_unique<Square>( 1.5 ) );
-     shapes.emplace_back( std::make_unique<Circle>( 4.2 ) );
-     
-     // Drawing all shapes
-     drawAllShapes( shapes );
+    using Shapes = std::vector<std::unique_ptr<Shape>>;
+
+    // Creating some shapes
+    Shapes shapes;
+    shapes.emplace_back(std::make_unique<Circle>(2.0)); // Add a Circle
+    shapes.emplace_back(std::make_unique<Square>(1.5)); // Add a Square
+    shapes.emplace_back(std::make_unique<Circle>(4.2)); // Add another Circle
+
+    // Drawing all shapes using the Visitor Pattern
+    drawAllShapes(shapes);
+
+    return 0;
 }
