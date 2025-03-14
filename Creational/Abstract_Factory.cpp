@@ -14,6 +14,18 @@
     - Concrete Factories: Implement factory methods to create concrete products
     - Abstract Products (MapSite, Room, Door, Wall): Declare interfaces for products
     - Concrete Products: Implement specific product interfaces
+    
+    Benefits and Liabilities:
+    - It isolates concrete classes.
+    - It makes exchanging product families easy.
+    - It promotes consistency among products.
+    - Supporting new kinds of products is difficult. Why ? Making changes in abstract factory can lead to making changes in all subclasses.
+    
+    Related Patters:
+    
+    - AbstractFactory classes are often implemented with factory methods (Factory Method) , but they can also be implemented using Prototype. 
+    - A concrete factory is often a singleton.
+
 */
 
 // Enum to represent directions for room sides
