@@ -4,10 +4,7 @@
 /*
     Abstract Factory Design Pattern Implementation
 
-    Intent: Provide an interface for creating families of related or dependent objects 
-    without specifying their concrete classes. This pattern allows a client to create 
-    objects through an abstract interface while keeping the object creation decoupled 
-    from the client's code.
+    Intent: Provide an interface for creating families of related or dependent objects without specifying their concrete classes. This pattern allows a client to create  objects through an abstract interface while keeping the object creation decoupled  from the client's code.
 
     Structure:
     - Abstract Factory (MazeFactory): Declares interface for creating product objects
