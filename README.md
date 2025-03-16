@@ -6,6 +6,9 @@ Based on the intent of the programming we have following categories:
 # 1. Creational Patterns
 
 - [Abstract Factory](./Creational/Abstract_Factory.cpp)
+
+   ![image](https://github.com/user-attachments/assets/5058b9c6-8163-44a7-8080-feda18f55406)
+
 - [Builder](./Creational/Builder.cpp)
 
    ![image](https://github.com/user-attachments/assets/8e7a7c24-c860-4fc1-be2b-a3f9679fac65)
