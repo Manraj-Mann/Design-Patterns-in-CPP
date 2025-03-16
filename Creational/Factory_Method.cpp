@@ -91,7 +91,13 @@ private:
     - Abstract Factory is often implemented with factory methods. 
     - Factory methods are usually called within Template Methods.
     - Prototypes don't require subclassing Creator. However, they often require an Initialize operation on the Product class.Creator uses Initialize to initialize the object. Factory Method doesn't require such an operation.
+
+    Structure : 
+
+    - Concrete / Abstract creator : MazeGame
+    - Concrete / Abstract product : Wall , Maze , Door and Room.
 */
+
 
 class MazeGame 
 {
