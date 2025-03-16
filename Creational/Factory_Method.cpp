@@ -83,8 +83,67 @@ private:
     Implementation : 
     
     - Factory methods in C++ are always virtual functions and are often pure virtual. Justbe careful not to call factory methods in the Creator's constructor— the factory method in the ConcreteCreatorwon't be available yet.
-    - Instead of creating the product in the constructor,the constructor merely initializes it to 0. The accessor returns the product. Butfirst it checksto make sure the product exists, and if it doesn't, the accessor creates it. This technique is sometimes called lazy initialization. 
+    - Parameterized factory methods.
+
+        class Creator 
+        {
+            public:
+            virtual Product* Create(Productld);
+        };
+        
+        Product* Creator::Create (Productld id)
+        {
+            if (id == MINE) return new MyProduct;
+            if (id == YOURS) return new YourProduct;
+            // repeat for remaining products...
+            return 0;
+        }
+        
+    - Instead of creating the product in the constructor,the constructor merely initializes it to 0. The accessor returns the product. Butfirst it checksto make sure the product exists, and if it doesn't, the accessor creates it. This technique is sometimes called lazy initialization.
+
+        class Creator 
+        {
+            public:
+            Product* GetProduct();
+            
+            protected:
+            virtual Product* CreateProduct();
+            
+            private:
+            Product* _product;
+        };
+            
+        Product* Creator::GetProduct () 
+        {
+            if (_product = = 0 ) 
+            {
+                _product = CreateProduct();
+            }
+            return _product;
+        }
+    
     - Using templates to avoid subclassing
+
+        // Abstract Creator
+        class Creator {
+            public:
+            virtual Product* CreateProduct() = 0 ;
+        };
+
+        // Concrete Creator
+        template <class TheProduct>
+        class StandardCreator: public Creator 
+        {
+            public:
+            virtual Product* CreateProduct();
+        };
+        
+        template <class TheProduct>
+        Product* StandardCreator<TheProduct>::CreateProduct () 
+        {
+            return new TheProduct;
+        }
+
     
     Related Patterns : 
     
