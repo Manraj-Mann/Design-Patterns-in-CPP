@@ -19,6 +19,10 @@
     - Implementing the Clone operation : cloning prototypes with complex structures usually requires a deep copy, because the clone and the original must be independent. Therefore you must ensure that the clone's components are clones of the prototype's components. Cloning forces you to decide what if anything will be shared.
     
     Related Patterns : 
+
+    - Prototype and Abstract Factory (87)are competing patterns in some ways, as we discuss at the end of this chapter. They can also be used together, however. An Abstract Factory might store a set of prototypes from which to clone and return product objects. 
+    - Designs that makeheavy use ofthe Composite and Decorator patterns often can benefit from Prototype as well.
+
     
 
 */
