@@ -1,5 +1,41 @@
 #include <iostream>
 
+using Coord = float;
+
+class Point {
+public:
+    Point(Coord x = 0, Coord y = 0) : _x(x), _y(y) {}
+private:
+    Coord _x, _y;
+};
+
+class Manipulator {};
+class Shape;
+
+class TextManipulator : public Manipulator 
+{
+public:
+    TextManipulator(const Shape* shape) {}
+};
+
+// Target interface (expected interface)
+class Shape {
+public:
+    virtual ~Shape() = default;
+    virtual void BoundingBox(Point& bottomLeft, Point& topRight) const = 0;
+    virtual Manipulator* CreateManipulator() const = 0;
+};
+
+// Existing class (Adaptee)
+class TextView {
+public:
+    TextView() {}
+    void GetOrigin(Coord& x, Coord& y) const { x = 0; y = 0; }
+    void GetExtent(Coord& width, Coord& height) const { width = 100; height = 50; }
+    virtual bool IsEmpty() const { return false; }
+};
+
+
 /*
     - Intent : Convert the interface of a class into another interface clients expect. Adapter lets classes work together that couldn't otherwise because of incompatible interfaces. Al.so known as Wrapper.
     
@@ -123,9 +159,85 @@
             - Proxy (207)defines a representative or surrogate for another object and does not change its interface.
 
 */
-int main() {
 
+/*1. Using Multiple Inheritance*/
+
+// Adapter class (adapts TextView to Shape)
+class TextShape : public Shape, private TextView {
+public:
+    void BoundingBox(Point& bottomLeft, Point& topRight) const override {
+        Coord x, y, width, height;
+        GetOrigin(x, y);
+        GetExtent(width, height);
+        bottomLeft = Point(x, y);
+        topRight = Point(x + width, y + height);
+    }
+
+    Manipulator* CreateManipulator() const override {
+        return new TextManipulator(this);
+    }
     
+    bool IsEmpty() const {
+        return TextView::IsEmpty();
+    }
+};
 
+int main() {
+    TextShape textShape;
+    
+    Point bottomLeft, topRight;
+    textShape.BoundingBox(bottomLeft, topRight);
+    
+    std::cout << "Bounding box calculated." << std::endl;
+    std::cout << "Is empty: " << textShape.IsEmpty() << std::endl;
+    
+    Manipulator* manipulator = textShape.CreateManipulator();
+    delete manipulator;
+    
     return 0;
 }
+
+/*
+2. Using Object Composition
+
+class TextShape : public Shape {
+public:
+    TextShape(TextView* textView) : _textView(textView) {}
+
+    void BoundingBox(Point& bottomLeft, Point& topRight) const override {
+        Coord x, y, width, height;
+        _textView->GetOrigin(x, y);
+        _textView->GetExtent(width, height);
+        bottomLeft = Point(x, y);
+        topRight = Point(x + width, y + height);
+    }
+
+    Manipulator* CreateManipulator() const override {
+        return new TextManipulator(this);
+    }
+    
+    bool IsEmpty() const {
+        return _textView->IsEmpty();
+    }
+
+private:
+    TextView* _textView;
+};
+
+int main() {
+    
+    TextView textView;
+    TextShape textShape(&textView);
+    
+    Point bottomLeft, topRight;
+    textShape.BoundingBox(bottomLeft, topRight);
+    
+    std::cout << "Bounding box calculated." << std::endl;
+    std::cout << "Is empty: " << textShape.IsEmpty() << std::endl;
+    
+    Manipulator* manipulator = textShape.CreateManipulator();
+    delete manipulator;
+    
+    return 0;
+}
+*/
