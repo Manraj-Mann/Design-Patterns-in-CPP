@@ -135,3 +135,24 @@ Creational design patterns abstract the instantiation process. They help make a 
 
 ---
 
+# 2. Structural Patterns
+
+---
+
+### **Patterns Overview**
+
+- **[Adapter Pattern](./)**
+
+   1. Implementation using inheritance of target and adaptee class : 
+      
+      ![image](https://github.com/user-attachments/assets/00312613-19ab-4613-99a7-140df51368ca)
+
+   2. Implementation using composition class :
+
+      ![image](https://github.com/user-attachments/assets/cdfc577e-95ef-4ff6-9c77-f605f22934a5)
+
+  
+  **Why Needed**: 
+  
+---
+
