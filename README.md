@@ -17,6 +17,68 @@ By using design patterns, developers can write **cleaner**, **more maintainable*
 
 ---
 
+# 0. Important UML Concepts
+
+![image](https://github.com/user-attachments/assets/70169a71-86fc-4959-97e5-ac47e8b42e10)
+
+**Differences Between Association, Aggregation, and Composition !**
+
+1. **Association** : A general relationship where two classes are connected but independent. Example: A Teacher interacts with a Student, but both can exist independently.
+
+   ```cpp
+    // Teacher knows a Student, but no ownership:
+    class Student; // Forward declaration
+
+    class Teacher {
+    public:
+        void setStudent(Student* s) { student = s; }
+    private:
+        Student* student; // Simple pointer (no ownership)
+    };
+   ```
+
+2. **Aggregation** : A "has-a" relationship where the part can exist without the whole. Example: A Classroom contains Students, but deleting the Classroom doesn’t delete the Students. Class A does not control lifetime of object of class B , object B may live after A is destroyed.
+
+   ```cpp
+    // Classroom has Students, but they exist independently
+    class Student; // Forward declaration
+
+    class Classroom {
+    public:
+        void addStudent(Student* s) { students.push_back(s); }
+    private:
+        std::vector<Student*> students; // Students can exist outside
+    };
+   ```
+
+3. **Composition** : A stricter "has-a" relationship where the part cannot exist without the whole. Example: A Car owns an Engine; destroying the Car also destroys the Engine.
+
+   ```cpp
+    // Car owns an Engine (lifetime controlled by Car)
+    class Engine {
+    public:
+        void start() { /*...*/ }
+    };
+    
+    class Car {
+    public:
+        Car() : engine(std::make_unique<Engine>()) {}
+        void startCar() { engine->start(); }
+    private:
+        std::unique_ptr<Engine> engine; // Engine destroyed with Car
+    };
+   ```
+
+**Key Takeaways**
+
+1. **Association**: Loose relationship (e.g., pointers/references).
+
+2. **Aggregation**: Shared ownership (e.g., pointers with external lifetime).
+
+3. **Composition**: Exclusive ownership (e.g., direct members or unique_ptr).
+
+---
+
 # 1. Creational Patterns
 
 Creational design patterns abstract the instantiation process. They help make a system independent of how its objects are created, composed, and represented.
@@ -72,3 +134,4 @@ Creational design patterns abstract the instantiation process. They help make a 
 - Use **Prototype** to avoid costly initialization via cloning.  
 
 ---
+
