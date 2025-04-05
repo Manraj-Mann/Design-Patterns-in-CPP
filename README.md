@@ -141,7 +141,7 @@ Creational design patterns abstract the instantiation process. They help make a 
 
 ### **Patterns Overview**
 
-- **[Adapter Pattern](./)**
+- **[Adapter Pattern](./Structural/adapter.cpp)**
 
    1. Implementation using inheritance of target and adaptee class : 
       
@@ -153,6 +153,9 @@ Creational design patterns abstract the instantiation process. They help make a 
 
   
   **Why Needed**: 
-  
----
 
+- **[Bridge Pattern](./Structural/bridge.cpp)**
+  
+   ![image](https://github.com/user-attachments/assets/9a455a4a-cf5b-4bfb-bfef-bc8eca5a0c5b)
+
+---
