@@ -158,4 +158,10 @@ Creational design patterns abstract the instantiation process. They help make a 
   
    ![image](https://github.com/user-attachments/assets/9a455a4a-cf5b-4bfb-bfef-bc8eca5a0c5b)
 
+- **[Composite Pattern](./Structural/composite.cpp)**
+  
+   ![image](https://github.com/user-attachments/assets/8a063c09-7df9-465c-aedc-d3b35455dd1f)
+
+
+
 ---
